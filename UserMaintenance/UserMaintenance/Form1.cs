@@ -1,6 +1,7 @@
 ﻿using System;
 using System.ComponentModel;
 using System.IO;
+using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using UserMaintenance.Entities;
@@ -16,6 +17,7 @@ namespace UserMaintenance
             lblFullName.Text = Resource1.FullName;
             btnAdd.Text = Resource1.Add;
             button1.Text = Resource1.Write;
+            button2.Text = Resource1.Delete;
 
             listUsers.DataSource = users;
             listUsers.ValueMember = "ID";
@@ -47,6 +49,13 @@ namespace UserMaintenance
                     sw.WriteLine();
                 }
             }
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            Guid id = (Guid)listUsers.SelectedValue;
+            var od = from x in users where x.ID == id select x;
+            users.Remove(od.FirstOrDefault());
         }
     }
 }
